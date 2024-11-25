@@ -1,0 +1,32 @@
+package lab5;
+
+public class Operation<T> {
+	public T[] unionSets(Set<T> set1, Set<T> set2) {
+        T[] array1 = set1.getSet();
+        T[] array2 = set2.getSet();
+        T[] result = Arrays.copyOf(array1, array1.length + array2.length);
+
+        int index = array1.length;
+        for (T element : array2) {
+            if (!contains(array1, element)) {
+                result[index++] = element;
+            }
+        }
+        return Arrays.copyOf(result, index);
+    }
+
+    // Перетин множин
+    public T[] intersectionSets(Set<T> set1, Set<T> set2) {
+        T[] array1 = set1.getSet();
+        T[] array2 = set2.getSet();
+        T[] result = Arrays.copyOf(array1, array1.length);
+
+        int index = 0;
+        for (T element : array1) {
+            if (contains(array2, element)) {
+                result[index++] = element;
+            }
+        }
+        return Arrays.copyOf(result, index);
+    }
+}

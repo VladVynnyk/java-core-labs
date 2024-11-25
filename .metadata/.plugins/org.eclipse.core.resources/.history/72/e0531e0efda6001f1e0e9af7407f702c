@@ -1,0 +1,102 @@
+package lab6;
+import java.util.EnumMap;
+import java.util.PriorityQueue;
+import lab3.SparePart;
+import lab4.SparePartV2;
+import lab4.PartCategory;
+
+enum PartType {
+    ENGINE_PART,
+    BRAKE_PART,
+    ELECTRICAL_PART
+}
+
+public class Lab6 {
+    public static void main(String[] args) {
+       
+    	// Creating instances of class SparePart from lab3
+        SparePart part1 = new SparePart("Brake Pad", 50, 15.99, 24);
+        SparePart part2 = new SparePart("Oil Filter", 30, 5.99, 18);
+        SparePart part3 = new SparePart("Battery", 15, 70.0, 36);
+
+        // Creating instances of class SparePartV2 from lab4
+        SparePartV2 partV2_1 = new SparePartV2("Brake Pad V2", 40, 20.99, 24, PartCategory.BRAKES);
+        SparePartV2 partV2_2 = new SparePartV2("Oil Filter V2", 25, 8.99, 18, PartCategory.ENGINE);
+        SparePartV2 partV2_3 = new SparePartV2("Battery V2", 10, 75.0, 36, PartCategory.ELECTRICAL);
+
+        // 2. Saving instances SparePart in PriorityQueue
+        PriorityQueue<SparePart> priority_col_1 = new PriorityQueue<>(
+                (partA, partB) -> Double.compare(partA.getUnitPrice(), partB.getUnitPrice())
+            );
+            priority_col_1.add(part1);
+            priority_col_1.add(part2);
+            priority_col_1.add(part3);
+
+        // 2. Creating EnumMap for instances SparePart
+        EnumMap<PartType, SparePart> enum_col_1 = new EnumMap<>(PartType.class);
+        enum_col_1.put(PartType.BRAKE_PART, part1);
+        enum_col_1.put(PartType.ENGINE_PART, part2);
+        enum_col_1.put(PartType.ELECTRICAL_PART, part3);
+
+        // 3. Створення PriorityQueue для об'єктів SparePartV2
+        PriorityQueue<SparePartV2> priority_col_2 = new PriorityQueue<>(
+            (partA, partB) -> Double.compare(partA.getUnitPrice(), partB.getUnitPrice())
+        );
+        priority_col_2.add(partV2_1);
+        priority_col_2.add(partV2_2);
+        priority_col_2.add(partV2_3);
+
+        // 4. Створення EnumMap для об'єктів SparePartV2
+        EnumMap<PartType, SparePartV2> enum_col_2 = new EnumMap<>(PartType.class);
+        enum_col_2.put(PartType.BRAKE_PART, partV2_1);
+        enum_col_2.put(PartType.ENGINE_PART, partV2_2);
+        enum_col_2.put(PartType.ELECTRICAL_PART, partV2_3);
+
+        System.out.println("Elements in priority_col_1 (SparePart):");
+        for (SparePart part : priority_col_1) {
+            System.out.println("SparePart { partName='" + part.getPartName() + 
+                               "', quantity=" + part.getQuantity() + 
+                               ", unitPrice=" + part.getUnitPrice() + 
+                               ", storageDuration=" + part.getStorageDuration() + 
+                               " }");
+        }
+
+     
+        // Виведення елементів EnumMap для SparePart (enum_col_1)
+        System.out.println("\nElements in enum_col_1 (SparePart):");
+        for (PartType type : enum_col_1.keySet()) {
+            SparePart part = enum_col_1.get(type);
+            System.out.println("Key: " + type + ", Value: " +
+                               "SparePart { partName='" + part.getPartName() +
+                               "', quantity=" + part.getQuantity() +
+                               ", unitPrice=" + part.getUnitPrice() +
+                               ", storageDuration=" + part.getStorageDuration() +
+                               " }");
+        }
+
+        // Видалення елемента з PriorityQueue для SparePart (priority_col_1) та додавання нового елемента
+        priority_col_1.poll();
+        SparePart newPart = new SparePart("Air Filter", 20, 10.99, 12);
+        priority_col_1.add(newPart); 
+
+        // Заміна елемента в EnumMap для SparePartV2 (enum_col_2)
+        SparePartV2 newPartV2 = new SparePartV2("Fuel Pump V2", 15, 30.99, 18, PartCategory.ENGINE);
+        enum_col_2.put(PartType.ENGINE_PART, newPartV2);
+
+        // Виведення елементів PriorityQueue для SparePart після модифікації
+        System.out.println("\nElements in priority_col_1 (SparePart) after modification:");
+        for (SparePart part : priority_col_1) {
+            System.out.println("SparePart { partName='" + part.getPartName() + 
+                               "', quantity=" + part.getQuantity() + 
+                               ", unitPrice=" + part.getUnitPrice() + 
+                               ", storageDuration=" + part.getStorageDuration() + 
+                               " }");
+        }
+
+        System.out.println("\nElements in enum_col_2 (SparePartV2) after modification:");
+        for (PartType type : enum_col_2.keySet()) {
+            System.out.println("Key: " + type + ", Value: " + enum_col_2.get(type));
+            type.toString();
+        }
+    }
+}
